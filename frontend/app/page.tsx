@@ -49,7 +49,7 @@ export default function Home() {
             onClick={() => setCurrentView(currentView === 'PATIENTS' ? 'MEDICATIONS' : 'PATIENTS')}
             className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
           >
-            {currentView === 'PATIENTS' ? 'View Medications' : 'View Patients'}
+            {currentView === 'PATIENTS' ? 'Medications View' : 'Patients View'}
           </button>
         </div>
       </div>
