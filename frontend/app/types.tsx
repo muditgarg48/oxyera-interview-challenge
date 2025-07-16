@@ -1,5 +1,3 @@
-export type SampleEntity = { id: number; name: string };
-
 export type Patient = {
     id: number;
     name: string;
@@ -22,3 +20,6 @@ export type Assignment = {
     medication: Medication;
     remainingDays?: number;
 };
+
+export type FormType = 'PATIENT' | 'MEDICATION' | 'ASSIGNMENT';
+export type ViewType = 'PATIENTS' | 'MEDICATIONS';

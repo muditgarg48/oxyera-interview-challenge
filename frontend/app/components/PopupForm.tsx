@@ -3,8 +3,7 @@
 import PatientForm from '../forms/PatientForm';
 import MedicationForm from '../forms/MedicationForm';
 import AssignmentForm from '../forms/AssignmentForm';
-
-type FormType = 'PATIENT' | 'MEDICATION' | 'ASSIGNMENT';
+import { FormType } from '../types';
 
 export default function PopupForm({ 
     showForm, 
