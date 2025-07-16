@@ -22,4 +22,11 @@ export class AssignmentController {
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.assignmentService.findOne(id);
   }
+
+  @Get(':id/remaining-days')
+  async getRemainingDays(@Param('id', ParseIntPipe) id: number) {
+    return {
+      remainingDays: await this.assignmentService.getRemainingDays(id),
+    };
+  }
 }

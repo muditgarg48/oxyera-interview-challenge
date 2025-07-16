@@ -35,4 +35,12 @@ export class AssignmentService {
     }
     return assignment;
   }
+
+  async getRemainingDays(id: number): Promise<number> {
+    const assignment = await this.findOne(id);
+    const endDate = new Date(assignment.startDate);
+    endDate.setDate(endDate.getDate() + assignment.days);
+    const today = new Date();
+    return Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  }
 }
