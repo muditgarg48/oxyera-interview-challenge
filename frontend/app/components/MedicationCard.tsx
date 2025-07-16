@@ -72,6 +72,21 @@ export default function MedicationCard({ medication, assignedPatients }: {
     );
   }
 
+  const SinglePatient = ({patient, patientAssignments}: {patient: any, patientAssignments: any}) => {
+    return (
+      <div key={patient.id} className="border rounded-lg p-3">
+        <div className="font-medium">{patient.name}</div>
+        <div className="text-sm text-gray-600">
+          {patientAssignments.length} {patientAssignments.length === 1 ? 'assignment' : 'assignments'}
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {patientAssignments.map((assignment: unknown) => <SingleAssignment assignment={assignment}/>)}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="border rounded-lg p-4 shadow-sm mb-4">
       {/* Medication Header */}
@@ -90,24 +105,12 @@ export default function MedicationCard({ medication, assignedPatients }: {
         <div className="grid gap-3">
           {assignedPatients.map((patient) => {
             const patientAssignments = patient.assignments
-              ?.filter(a => a.medication?.id === medication.id)
-              .map((assignment, index) => ({
-                ...assignment,
-                assignmentNumber: index + 1
-              })) || [];
-
-            return (
-              <div key={patient.id} className="border rounded-lg p-3">
-                <div className="font-medium">{patient.name}</div>
-                <div className="text-sm text-gray-600">
-                  {patientAssignments.length} {patientAssignments.length === 1 ? 'assignment' : 'assignments'}
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                  {patientAssignments.map((assignment) => <SingleAssignment assignment={assignment}/>)}
-                </div>
-              </div>
-            );
+            ?.filter(a => a.medication?.id === medication.id)
+            .map((assignment, index) => ({
+              ...assignment,
+              assignmentNumber: index + 1
+            })) || [];
+            return (<SinglePatient patient={patient} patientAssignments={patientAssignments}/>);
           })}
         </div>
       ) : (
