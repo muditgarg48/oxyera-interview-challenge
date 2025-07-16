@@ -2,6 +2,7 @@
 'use client';
 
 import { Medication, Patient, Assignment } from '../types';
+import ProgressCircle from './ProgressCircle';
 
 export default function MedicationCard({ medication, assignedPatients }: {
   medication: Medication;
@@ -25,21 +26,9 @@ export default function MedicationCard({ medication, assignedPatients }: {
     const totalDays = assignment.days;
     const remainingDays = assignment.remainingDays ?? totalDays;
     const daysCompleted = totalDays - remainingDays;
-    const progressPercentage = Math.min(100, Math.max(0, 
-      (daysCompleted / totalDays) * 100
-    ));
-    
-    let progressColor;
-    if (progressPercentage <= 25) {
-      progressColor = 'bg-gray-200';
-    } else if (progressPercentage <= 60) {
-      progressColor = 'bg-orange-300';
-    } else {
-      progressColor = 'bg-green-400';
-    }
 
     return (
-      <div key={assignment.id} className="border rounded-lg p-3 flex justify-between items-center">
+      <div className="border rounded-lg p-3 flex justify-between items-center">
         <div className="flex-1">
           <div className="font-medium">
             Assignment {assignment.assignmentNumber}
@@ -52,37 +41,12 @@ export default function MedicationCard({ medication, assignedPatients }: {
           </div>
         </div>
         
-        <div className="relative group ml-3">
-          <div className="relative w-12 h-12">
-            <div className={`absolute w-full h-full rounded-full border-2 ${progressColor}`}></div>
-            <div 
-              className={`absolute w-full h-full rounded-full ${progressColor}`}
-              style={{
-                clipPath: `circle(${progressPercentage}% at 50% 50%)`,
-                transform: 'rotate(-90deg)',
-                transformOrigin: 'center'
-              }}
-            ></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-xs font-medium text-gray-800">
-                {daysCompleted}/{totalDays}
-              </span>
-            </div>
-            <div className="absolute hidden group-hover:block z-10 w-48 p-2 bg-white border border-gray-200 rounded shadow-lg text-xs mt-1 right-0">
-              <div className="font-semibold text-gray-800 mb-1">
-                Progress: {Math.round(progressPercentage)}%
-              </div>
-              <div className="text-gray-600">
-                {remainingDays} days remaining
-              </div>
-              {medication.frequency && (
-                <div className="text-gray-600">
-                  {daysCompleted * Number(medication.frequency)}/{totalDays * Number(medication.frequency)} doses completed
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <ProgressCircle 
+          total={totalDays} 
+          completed={daysCompleted}
+          showTooltip={true}
+          frequency={Number(medication.frequency)}
+        />
       </div>
     );
   };
