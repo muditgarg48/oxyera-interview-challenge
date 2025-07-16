@@ -52,10 +52,8 @@ export default function Home() {
 
   if (loading) return <div>Loading...</div>;
 
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Patient Management</h1>
-
+  const ActionBar = () => {
+    return (
       <div className="flex gap-4 mb-8">
         <button
           onClick={() => setShowPatientForm(true)}
@@ -76,13 +74,24 @@ export default function Home() {
           Assign Medication
         </button>
       </div>
-      
+    );
+  }
+
+  const PatientList = () => {
+    return (
       <div className="grid gap-6">
         {patients.map((patient) => (
           <PatientCard key={patient.id} patient={patient} />
         ))}
       </div>
+    );
+  }
 
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-6">Patient Management</h1>
+      <ActionBar/>
+      <PatientList/>
       <PopupForm
         showForm={showPatientForm}
         groupName="PATIENT"
